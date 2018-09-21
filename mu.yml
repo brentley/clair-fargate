@@ -1,0 +1,24 @@
+---
+namespace: clair
+environments:
+  - name: acceptance
+    provider: ecs-fargate
+service:
+  port: 6061
+  pathPatterns:
+  - /*
+  healthEndpoint: /health
+  pipeline:
+      acceptance:
+      production:
+        disabled: true
+  environment:
+    PGUSER: ${DatabaseMasterUsername}
+    DB_PASSWORD: ${DatabaseMasterPassword}
+    DB_HOST: ${DatabaseEndpointAddress}
+  database:
+    name: clair
+    engine: postgres
+    masterUsername: postgres
+    iamAuthentication: true
+    allocatedStorage: 100
